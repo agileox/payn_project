@@ -1,0 +1,4 @@
+Plan for the assessment
+1. install jupyter notebook - setup & configure
+2. Install spark 3.5.3 - setup & configure | challenges mismatch version
+3. Install py 3.11 (spark)
