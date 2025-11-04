@@ -1,4 +1,6 @@
 Plan for the assessment
-1. install jupyter notebook - setup & configure
+1. Install jupyter notebook - successfully setup & configure Version: 7.4.7
 2. Install spark 3.5.3 - setup & configure | challenges mismatch version
 3. Install py 3.11 (spark)
+4. All installation happen on my Fedora 42
+5. Start to learn to get notebook to read json
