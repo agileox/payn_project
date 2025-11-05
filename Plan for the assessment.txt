@@ -3,4 +3,4 @@ Plan for the assessment
 2. Install spark 3.5.3 - setup & configure | challenges mismatch version
 3. Install py 3.11 (spark)
 4. All installation happen on my Fedora 42
-5. Start to learn to get notebook to read json
+5. Start to learn to get notebook to read json (/home/agileox/Project/payn_project/data/cc_sample_transaction.json)
