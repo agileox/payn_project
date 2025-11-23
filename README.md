@@ -15,3 +15,13 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 + Free Jupyter Notebook
 + PostgreSQL 18
 + Superset
+
+## Logs & Journal
+1. Installed jupyter notebook - successfully setup & configure Version: 7.4.7
+2. Installed spark 3.5.3 - setup & configure | challenges mismatch version
+3. Installed py 3.11 (spark) 
+4. Start to learn to get notebook to read json (/home/agileox/Project/payn_project/data/cc_sample_transaction.json)
+5. Managed to ingest the kaggel data into postgresql 18 that also has been successfully installed on my Fedora 34
+6. Installed Superset to run on my Fedora 43
+7. To explore to push the data into Superset
+8. Start exploring on the dashboarding
