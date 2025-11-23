@@ -14,5 +14,4 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 + PySpark 3.11 (spark)
 + Free Jupyter Notebook
 + PostgreSQL 18
-
-
++ Superset
