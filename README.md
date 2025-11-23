@@ -34,7 +34,7 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 ```
 
 ### The script
-[Go to my file](pyspark.md)
+[Go to pyspark.md](pyspark.md)
 
 ### Schema and Table  Creation in PostgreSQL
 ```SQL
