@@ -1,15 +1,11 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# In[11]:
-
-
 # Imports libraries & Spark Session
 
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType, StructField, StringType
 from pyspark.sql.functions import (
-    from_json, col, split, trim, regexp_replace, when, regexp_extract, size, length, lit, current_date
+    from_json, col, split, trim, regexp_replace, when, regexp_extract, size, length, lit, current_date, from_unixtime
 )
 
 # This is required when running on my laptop with Fedora 43 and 4 CPUs, 8 GB ram
@@ -22,10 +18,6 @@ spark = (
     .getOrCreate()
 )
 spark.sparkContext.setLogLevel("ERROR")
-
-
-# In[12]:
-
 
 # Read downloaded JSON from kaggel & Define Schemas
 
@@ -49,10 +41,6 @@ personal_schema = StructType([
     StructField("dob", StringType(), True)
 ])
 
-
-# In[13]:
-
-
 # Process to Flatten Nested JSON
 
 df_level1 = df.withColumn("personal_detail", from_json(col("personal_detail"), personal_schema))
@@ -75,10 +63,6 @@ df_flat = df_level2.select(
     col("address.state").alias("address_state"),
     col("address.zip").alias("address_zip")
 )
-
-
-# In[14]:
-
 
 # Identified not that clean data and splitting the Person Name
 
@@ -116,10 +100,6 @@ df_final = df_split \
     ) \
     .drop("first_tok", "second_tok", "raw_person_name", "raw_name", "name")
 
-
-# In[15]:
-
-
 # Normalize Gender to Female and Male
 
 df_final = df_final.withColumn(
@@ -128,10 +108,6 @@ df_final = df_final.withColumn(
     .when(col("gender") == "M", "Male")
     .otherwise(col("gender"))
 )
-
-
-# In[16]:
-
 
 # Mask Credit Card Number (keep last 4 digits) & Postcode (keep 2 digits)
 
@@ -160,10 +136,6 @@ df_final = df_final.withColumn(
     ).otherwise(lit(None))
 ).drop("address_street")
 
-
-# In[17]:
-
-
 # Casting the proper data type for the used of inserting into Postgresql DB
 
 df_final = df_final \
@@ -173,27 +145,41 @@ df_final = df_final \
     .withColumn("is_fraud", col("is_fraud").cast("boolean")) \
     .withColumn("trans_date_trans_time", col("trans_date_trans_time").cast("timestamp"))
 
+# handling the timestamp matters
 
-# In[18]:
+df_final = df_final.withColumn(
+    "merch_eff_time",
+    when(length(col("merch_eff_time").cast("string")) == 16,  # microseconds
+         from_unixtime((col("merch_eff_time").cast("bigint")/1000000).cast("bigint")))
+    .when(length(col("merch_eff_time").cast("string")) == 13,  # milliseconds
+         from_unixtime((col("merch_eff_time").cast("bigint")/1000).cast("bigint")))
+    .when(length(col("merch_eff_time").cast("string")) == 10,  # seconds
+         from_unixtime(col("merch_eff_time").cast("bigint")))
+    .otherwise(None)
+    .cast("timestamp")
+)
 
+df_final = df_final.withColumn(
+    "merch_last_update_time",
+    when(length(col("merch_last_update_time").cast("string")) == 16,  # microseconds
+         from_unixtime((col("merch_last_update_time").cast("bigint")/1000000).cast("bigint")))
+    .when(length(col("merch_last_update_time").cast("string")) == 13,  # milliseconds
+         from_unixtime((col("merch_last_update_time").cast("bigint")/1000).cast("bigint")))
+    .when(length(col("merch_last_update_time").cast("string")) == 10,  # seconds
+         from_unixtime(col("merch_last_update_time").cast("bigint")))
+    .otherwise(None)
+    .cast("timestamp")
+)
 
 # preparing the ingestion date before pushing to PG DB
 
 df_final = df_final.withColumn("ingestion_date", current_date())
 #df_final = df_final.withColumn("ingestion_date", lit("2025-11-23").cast("date"))
 
-
-# In[19]:
-
-
 # Verify
 
-print("Row count:", df_final.count())
-df_final.show(10, truncate=False)
-
-
-# In[22]:
-
+#print("Row count:", df_final.count())
+#df_final.show(100, truncate=False)
 
 # Push to PostgreSQL DB
 
@@ -204,17 +190,10 @@ connection_properties = {
     "driver": "org.postgresql.Driver"
 }
 
-#df_final.write \
-#    .jdbc(
-#        url=jdbc_url,
-#        table="payn_etl.cleaned_transactions_partition",   # schema-qualified
-#        mode="append",
-#        properties=connection_properties
-#    )
-
-
-# In[ ]:
-
-
-
-
+df_final.write \
+    .jdbc(
+        url=jdbc_url,
+        table="payn_etl.cleaned_transactions_partition",   # schema-qualified
+        mode="append",
+        properties=connection_properties
+    )
