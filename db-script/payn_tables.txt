@@ -35,6 +35,12 @@ RENAME COLUMN address_street TO address_street_masked;
 ALTER TABLE payn_etl.cleaned_transactions_partition
 RENAME COLUMN address_zip TO address_zip_masked;
 
+ALTER TABLE payn_etl.cleaned_transactions_partition
+ALTER COLUMN merch_eff_time TYPE VARCHAR(200);
+
+ALTER TABLE payn_etl.cleaned_transactions_partition
+ALTER COLUMN merch_last_update_time TYPE VARCHAR(200);
+
 -----------
 CREATE TABLE IF NOT EXISTS payn_etl.cleaned_transactions (
     id SERIAL PRIMARY KEY,
