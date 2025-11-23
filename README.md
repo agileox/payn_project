@@ -1,5 +1,5 @@
 # payn_project
-## Project Desc:
+## Project Description:
 This is a project to learn how to flatten JSON file with 1.2 Million rows, process it and transform to make sure PII data has been masked properly and ingest the data into local postgresql for next dashboarding activities.
 
 ## Method:
@@ -9,14 +9,16 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 - Mask credit card (keep last 4 digits), address street and address zip for keeping PII data safe
 - Push final dataFrame into PostgreSQL
 
-## Tools
+## Tools:
 + Fedora 43
 + PySpark 3.11 (spark)
 + Free Jupyter Notebook
 + PostgreSQL 18
 + Superset
 
-## Logs & Journaling
+
+
+## Logs & Journaling:
 1. Installed jupyter notebook - successfully setup & configure Version: 7.4.7
 2. Installed spark 3.5.3 - setup & configure | challenges mismatch version
 3. Installed py 3.11 (spark) 
