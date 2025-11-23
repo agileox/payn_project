@@ -18,6 +18,8 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 
 ### Jupyter Notebook
 ![jupyter](images/jupyter_project_folder.png "project folder")
+
+### The pyspark script
 ![pyspark](images/jupyter_pyspark.png "pyspark script")
 
 ## Logs & Journaling:
