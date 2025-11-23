@@ -16,7 +16,8 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 + PostgreSQL 18
 + Superset
 
-
+### Jupyter Notebook
+![jupyter](images/jupyter_project_folder.png)
 
 ## Logs & Journaling:
 1. Installed jupyter notebook - successfully setup & configure Version: 7.4.7
