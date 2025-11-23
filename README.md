@@ -248,6 +248,7 @@ PARTITION BY RANGE (ingestion_date);
 
 ```
 ### Ingested Table
+![PostgreSQL Table](images/pg_table.png "Sample of Table Data Ingested")
 
 ## Logs & Journaling:
 1. Installed jupyter notebook - successfully setup & configure Version: 7.4.7
