@@ -1,4 +1,3 @@
-## The Script
 [Back to README.md](README.md)
 
 ### The script
