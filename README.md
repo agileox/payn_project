@@ -250,6 +250,9 @@ PARTITION BY RANGE (ingestion_date);
 ### Ingested Table
 ![PostgreSQL Table](images/pg_table.png "Sample of Table Data Ingested")
 
+### Superset
+![Superset](images/superset.png "Superset screen running on my local")
+
 ## Logs & Journaling:
 1. Installed jupyter notebook - successfully setup & configure Version: 7.4.7
 2. Installed spark 3.5.3 - setup & configure | challenges mismatch version
