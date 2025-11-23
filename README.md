@@ -74,7 +74,9 @@ PARTITION BY RANGE (ingestion_date);
 ![PostgreSQL Table](images/pg_table.png "Sample of Table Data Ingested")
 
 ### Superset
-![Superset](images/superset.png "Superset screen running on my local")
+![Superset](images/superset_login.png "Superset screen running on my local")
+
+![Sample Dashboard](images/superset_dashboard.png "Superset Dashboard")
 
 ## Logs & Journaling:
 1. Installed jupyter notebook - successfully setup & configure Version: 7.4.7
