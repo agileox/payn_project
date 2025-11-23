@@ -22,7 +22,7 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 ### The pyspark script
 ![pyspark](images/jupyter_pyspark.png "pyspark script")
 
-### The source
+### The sample data source in json format
 ```json
 {"Unnamed: 0":"0","trans_date_trans_time":"2019-01-01 00:00:18","cc_bic":"CITIUS33CHI","cc_num":"2703186189652095","merchant":"fraud_Rippin, Kub and Mann","category":"misc_net","amt":"4.97","personal_detail":"{\"person_name\":\"Jennifer,Banks,eeeee\",\"gender\":\"F\",\"address\":\"{\\\"street\\\":\\\"561 Perry Cove\\\",\\\"city\\\":\\\"Moravian Falls\\\",\\\"state\\\":\\\"NC\\\",\\\"zip\\\":\\\"28654\\\"}\",\"lat\":\"36.0788\",\"long\":\"-81.1781\",\"city_pop\":\"3495\",\"job\":\"Psychologist, counselling\",\"dob\":\"1988-03-09\"}","trans_num":"0b242abb623afc578575680df30655b9","merch_lat":"36.011293","merch_long":"-82.048315","is_fraud":"0","merch_zipcode":"28705","merch_eff_time":"1325376018798532","merch_last_update_time":"1325376018666"}
 {"Unnamed: 0":"1","trans_date_trans_time":"2019-01-01 00:00:44","cc_bic":"ADMDUS41","cc_num":"630423337322","merchant":"fraud_Heller, Gutmann and Zieme","category":"grocery_pos","amt":"107.23","personal_detail":"{\"person_name\":\"Stephanie,Gill,eeeee\",\"gender\":\"F\",\"address\":\"{\\\"street\\\":\\\"43039 Riley Greens Suite 393\\\",\\\"city\\\":\\\"Orient\\\",\\\"state\\\":\\\"WA\\\",\\\"zip\\\":\\\"99160\\\"}\",\"lat\":\"48.8878\",\"long\":\"-118.2105\",\"city_pop\":\"149\",\"job\":\"Special educational needs teacher\",\"dob\":\"1978-06-21\"}","trans_num":"1f76529f8574734946361c461b024d99","merch_lat":"49.159046999999994","merch_long":"-118.186462","is_fraud":"0","merch_eff_time":"1325376044867960","merch_last_update_time":"132537604479"}
@@ -212,8 +212,41 @@ connection_properties = {
 #    )
 
 ```
-### Schema and Table  Creation in PostgreSQL
 
+### Schema and Table  Creation in PostgreSQL
+```SQL
+CREATE TABLE payn_etl.cleaned_transactions_partition (
+    unnamed_id character varying(50),
+    amt numeric,
+    category character varying(100),
+    cc_bic character varying(50),
+    cc_num_masked character varying(30),
+    is_fraud boolean,
+    merch_eff_time character varying(200),
+    merch_last_update_time character varying(200),
+    merch_lat character varying(50),
+    merch_long character varying(50),
+    merch_zipcode character varying(20),
+    merchant character varying(200),
+    trans_date_trans_time timestamp without time zone,
+    trans_num character varying(100),
+    first_name character varying(100),
+    last_name character varying(100),
+    gender character varying(20),
+    lat character varying(50),
+    long character varying(50),
+    city_pop integer,
+    job character varying(200),
+    dob date,
+    address_street_masked character varying(200),
+    address_city character varying(100),
+    address_state character varying(50),
+    address_zip_masked character varying(20),
+    ingestion_date date NOT NULL
+)
+PARTITION BY RANGE (ingestion_date);
+
+```
 ### Ingested Table
 
 ## Logs & Journaling:
