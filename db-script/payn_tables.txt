@@ -41,6 +41,14 @@ ALTER COLUMN merch_eff_time TYPE VARCHAR(200);
 ALTER TABLE payn_etl.cleaned_transactions_partition
 ALTER COLUMN merch_last_update_time TYPE VARCHAR(200);
 
+ALTER TABLE payn_etl.cleaned_transactions_partition
+ALTER COLUMN merch_eff_time TYPE TIMESTAMP
+USING trans_date_trans_time::timestamp;
+
+ALTER TABLE payn_etl.cleaned_transactions_partition
+ALTER COLUMN merch_last_update_time TYPE TIMESTAMP
+USING trans_date_trans_time::timestamp;
+
 -----------
 CREATE TABLE IF NOT EXISTS payn_etl.cleaned_transactions (
     id SERIAL PRIMARY KEY,
@@ -72,4 +80,11 @@ CREATE TABLE IF NOT EXISTS payn_etl.cleaned_transactions (
     address_zip      VARCHAR(20)
 );
 
+-----------------------------------------------
+select extract(month from trans_date_trans_time), sum(amt) from payn_etl.cleaned_transactions_partition group by extract(month from trans_date_trans_time) limit 10;
+
+SELECT DATE_TRUNC('day', trans_date_trans_time) AS day,
+       lat, long, SUM(amt) AS total_amt
+FROM payn_etl.cleaned_transactions
+GROUP BY day, lat, long;
 
