@@ -1,0 +1,69 @@
+CREATE TABLE payn_etl.cleaned_transactions_partition (
+    unnamed_id VARCHAR(50),
+    amt NUMERIC,
+    category VARCHAR(100),
+    cc_bic VARCHAR(50),
+    cc_num_masked VARCHAR(30),
+    is_fraud BOOLEAN,
+    merch_eff_time VARCHAR(200),
+    merch_last_update_time VARCHAR(200),
+    merch_lat VARCHAR(50),
+    merch_long VARCHAR(50),
+    merch_zipcode VARCHAR(20),
+    merchant VARCHAR(200),
+    trans_date_trans_time TIMESTAMP,
+    trans_num VARCHAR(100),
+    first_name VARCHAR(100),
+    last_name VARCHAR(100),
+    gender VARCHAR(20),
+    lat VARCHAR(50),
+    long VARCHAR(50),
+    city_pop INTEGER,
+    job VARCHAR(200),
+    dob DATE,
+    address_street_masked VARCHAR(200),
+    address_city VARCHAR(100),
+    address_state VARCHAR(50),
+    address_zip_masked VARCHAR(20),
+    ingestion_date DATE NOT NULL   -- NEW column for partitioning
+) PARTITION BY RANGE (ingestion_date);
+
+-----------
+ALTER TABLE payn_etl.cleaned_transactions_partition
+RENAME COLUMN address_street TO address_street_masked;
+
+ALTER TABLE payn_etl.cleaned_transactions_partition
+RENAME COLUMN address_zip TO address_zip_masked;
+
+-----------
+CREATE TABLE IF NOT EXISTS payn_etl.cleaned_transactions (
+    id SERIAL PRIMARY KEY,
+    unnamed_id        VARCHAR(50),
+    amt              NUMERIC,
+    category         VARCHAR(100),
+    cc_bic           VARCHAR(50),
+    cc_num_masked    VARCHAR(30),   -- masked card number
+    is_fraud         BOOLEAN,
+    merch_eff_time   VARCHAR(200),
+    merch_last_update_time VARCHAR(200),
+    merch_lat        VARCHAR(50),
+    merch_long       VARCHAR(50),
+    merch_zipcode    VARCHAR(20),
+    merchant         VARCHAR(200),
+    trans_date_trans_time TIMESTAMP,
+    trans_num        VARCHAR(100),
+    first_name       VARCHAR(100),
+    last_name        VARCHAR(100),
+    gender           VARCHAR(20),
+    lat              VARCHAR(50),
+    long             VARCHAR(50),
+    city_pop         INTEGER,
+    job              VARCHAR(200),
+    dob              DATE,
+    address_street   VARCHAR(200),
+    address_city     VARCHAR(100),
+    address_state    VARCHAR(50),
+    address_zip      VARCHAR(20)
+);
+
+
