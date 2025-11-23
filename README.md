@@ -1,6 +1,6 @@
 # payn_project
-by: Adi Yusman Md Yusof
-date: 2025-11-23
++ by: Adi Yusman Md Yusof
++ date: 2025-11-23
 
 ![Git Repo](https://github.com/agileox/payn_project.git)
 
