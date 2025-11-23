@@ -17,7 +17,8 @@ This is a project to learn how to flatten JSON file with 1.2 Million rows, proce
 + Superset
 
 ### Jupyter Notebook
-![jupyter](images/jupyter_project_folder.png)
+![jupyter](images/jupyter_project_folder.png "project folder")
+![pyspark](images/jupyter_pyspark "pyspark script")
 
 ## Logs & Journaling:
 1. Installed jupyter notebook - successfully setup & configure Version: 7.4.7
